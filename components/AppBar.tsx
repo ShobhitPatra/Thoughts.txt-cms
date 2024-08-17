@@ -18,7 +18,7 @@ const AppBar = () => {
           variant="ghost"
           className="md:text-lg text-slate-200 outline outline-1"
         >
-          Login
+          Sign In
         </Button>
       </Link>
     </div>
