@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -28,9 +29,15 @@ const formSchema = z.object({
     .min(8, {
       message: "Password too short",
     }),
-  confirmPassword: z.string().min(1, {
-    message: "Please enter password",
-  }),
+  confirmPassword: z
+    .string()
+    .min(1, {
+      message: "Please enter password",
+    })
+    .refine((data: any) => data.password === data.confirmPassword, {
+      path: ["confirmPassword"],
+      message: "Password do not match",
+    }),
   // .refine((data) => data === "password"),
 });
 
@@ -114,6 +121,9 @@ const SignupForm = () => {
           <div className="pt-4">
             <Button type="submit" className="w-full ">
               Sign Up with Google
+              <span className="px-1 ">
+                <FcGoogle className="size-5" />
+              </span>
             </Button>
           </div>
           <div className="pt-4">

@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -91,7 +92,10 @@ const SigninForm = () => {
           <Separator />
           <div className="pt-4">
             <Button type="submit" className="w-full ">
-              Sign In with Google
+              Sign In with Google{" "}
+              <span className="px-1 ">
+                <FcGoogle className="size-5" />
+              </span>
             </Button>
           </div>
           <div className="pt-4">
