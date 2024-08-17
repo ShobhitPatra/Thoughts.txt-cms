@@ -28,14 +28,19 @@ const formSchema = z.object({
     .min(8, {
       message: "Password too short",
     }),
+  confirmPassword: z.string().min(1, {
+    message: "Please enter password",
+  }),
+  // .refine((data) => data === "password"),
 });
 
-const SigninForm = () => {
+const SignupForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       password: "",
+      confirmPassword: "",
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -45,13 +50,13 @@ const SigninForm = () => {
   return (
     <div
       className="p-10 h-full w-full bg-slate-900 rounded-lg bg-clip-padding
-       backdrop-filter backdrop-blur-3xl bg-opacity-10
+       backdrop-filter backdrop-blur-3xl bg-opacity-10 
     "
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <label className="flex justify-center p-2">
-            <span className="text-2xl font-semibold">Sign In</span>
+            <span className="text-2xl font-semibold">Sign Up</span>
           </label>
           <FormField
             control={form.control}
@@ -83,23 +88,40 @@ const SigninForm = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="re-enter password"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="pt-4">
             <Button type="submit" className="w-full ">
-              Sign In
+              Sign Up
             </Button>
           </div>
           <Separator />
           <div className="pt-4">
             <Button type="submit" className="w-full ">
-              Sign In with Google
+              Sign Up with Google
             </Button>
           </div>
           <div className="pt-4">
             <Link
-              href={"/signup"}
+              href={"/signin"}
               className="hover:text-blue-300 hover:underline cursor-pointer"
             >
-              Don't have an account yet ?
+              Already have an account ?
             </Link>
           </div>
         </form>
@@ -108,4 +130,4 @@ const SigninForm = () => {
   );
 };
 
-export default SigninForm;
+export default SignupForm;
