@@ -7,7 +7,7 @@ const Blogs = () => {
   return (
     <div className="flex gap-4 container flex-wrap justify-center">
       {blogs.map((b) => (
-        <Link href={`/blog/${b.id}`}>
+        <Link href={`/blogs/${b.id}`}>
           <Blog
             key={b.id}
             title={b.title}

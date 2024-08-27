@@ -14,7 +14,18 @@ const AppBar = () => {
       <Link href="/" className="md:px-6">
         <p className="text-3xl font-semibold text-slate-200">Thoughts.txt</p>
       </Link>
-      <div className="md:px-6">
+      <div
+        className="md:px-6 flex md:gap-x-7 gap-x-2
+      "
+      >
+        <Link href={"/blogs"}>
+          <Button
+            variant="ghost"
+            className="md:text-lg text-slate-200 outline outline-1"
+          >
+            Blogs
+          </Button>
+        </Link>
         <Button
           onClick={() => {
             console.log("object");
