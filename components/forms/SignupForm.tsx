@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -17,31 +18,30 @@ import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username can't be empty",
-  }),
-  password: z
-    .string()
-    .min(1, {
-      message: "Please enter password",
-    })
-    .min(8, {
-      message: "Password too short",
+const formSchema = z
+  .object({
+    username: z.string().min(2, {
+      message: "Username can't be empty",
     }),
-  confirmPassword: z
-    .string()
-    .min(1, {
+    password: z
+      .string()
+      .min(1, {
+        message: "Please enter password",
+      })
+      .min(8, {
+        message: "Password too short",
+      }),
+    confirmPassword: z.string().min(1, {
       message: "Please enter password",
-    })
-    .refine((data: any) => data.password === data.confirmPassword, {
-      path: ["confirmPassword"],
-      message: "Password do not match",
     }),
-  // .refine((data) => data === "password"),
-});
+  })
+  .refine((data: any) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Password do not match",
+  });
 
 const SignupForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,8 +50,17 @@ const SignupForm = () => {
       confirmPassword: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const res = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    if (res.ok) {
+      router.push("/signin");
+    }
   }
 
   return (

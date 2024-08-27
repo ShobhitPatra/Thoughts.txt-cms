@@ -16,6 +16,9 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -32,6 +35,7 @@ const formSchema = z.object({
 });
 
 const SigninForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,8 +43,23 @@ const SigninForm = () => {
       password: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const res = await signIn("credentials", {
+        username: values.username,
+        password: values.password,
+        redirect: false, // Avoid automatic redirection so you can handle the response manually
+      });
+
+      if (res?.ok) {
+        console.log("Sign-in successful:", res);
+        router.push("/");
+      } else {
+        console.log("Sign-in failed:", res);
+      }
+    } catch (error) {
+      console.error("Sign-in error:", error);
+    }
   }
 
   return (

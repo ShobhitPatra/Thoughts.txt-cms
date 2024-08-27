@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
+import { signIn } from "next-auth/react";
 
 const AppBar = () => {
   return (
@@ -13,14 +14,18 @@ const AppBar = () => {
       <Link href="/" className="md:px-6">
         <p className="text-3xl font-semibold text-slate-200">Thoughts.txt</p>
       </Link>
-      <Link href="/signin" className="md:px-6">
+      <div className="md:px-6">
         <Button
+          onClick={() => {
+            console.log("object");
+            signIn();
+          }}
           variant="ghost"
           className="md:text-lg text-slate-200 outline outline-1"
         >
           Sign In
         </Button>
-      </Link>
+      </div>
     </div>
   );
 };

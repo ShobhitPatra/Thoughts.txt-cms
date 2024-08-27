@@ -1,10 +1,10 @@
-import SigninForm from "@/components/forms/SigninForm";
+import Blogs from "@/components/blogs/Blogs";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <SigninForm />
+      <Blogs />
     </div>
   );
 };
