@@ -21,9 +21,9 @@ const page = () => {
   return (
     <div
       className="
-      flex jsutify-center 
-    h-screen bg-gradient-to-r from-indigo-900 from-10% via-sky-900 via-30% to-emerald-900 to-90%
-    md:py-20 p-8"
+
+    bg-gradient-to-r from-indigo-900 from-10% via-sky-900 via-30% to-emerald-900 to-90%
+    md:py-20 p-8 "
     >
       <BlogDetail
         title="Random Post"
